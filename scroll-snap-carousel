@@ -1,0 +1,75 @@
+# Scroll-snap carousel (rauno.me style)
+
+A breakdown of the horizontal carousel effect used on rauno.me, plus a working implementation.
+
+## How it works
+
+1. **Horizontal scroll-snap container** — each panel is a fixed-width card sitting edge-to-edge in a flex row. The outer wrapper uses `scroll-snap-type: x mandatory` and each card uses `scroll-snap-align: start`. This gives the "one card at a time" feel as you drag/scroll, with the next card peeking in at the edge. No JS needed for the snapping itself — it's native CSS.
+
+2. **Custom scroll progress indicator** — the tick-mark bar at the top isn't a native scrollbar. It's custom-built (divs or SVG), where the width of the "filled" segment is driven by scroll progress (`scrollLeft / scrollWidth`), giving a minimal "tape measure" look instead of typical dot pagination.
+
+3. **Decorative elements** (the yellow circle, crosshair `+` on his site) are just absolutely positioned SVG/CSS sitting on top — not part of the carousel mechanics, pure art direction.
+
+## CSS
+
+```css
+.scroller {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* hide native scrollbar */
+}
+.scroller::-webkit-scrollbar { display: none; }
+
+.panel {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 320px; /* fixed card width, like each section on his site */
+}
+```
+
+## JS — progress bar driven by scroll position
+
+```js
+const scroller = document.querySelector('.scroller');
+const progressBar = document.querySelector('.progress-fill');
+
+scroller.addEventListener('scroll', () => {
+  const max = scroller.scrollWidth - scroller.clientWidth;
+  const pct = scroller.scrollLeft / max;
+  progressBar.style.width = `${pct * 100}%`;
+}, { passive: true });
+```
+
+## JS — prev/next buttons (smooth scroll by one panel)
+
+```js
+function scrollByPanel(dir) {
+  const card = scroller.children[0];
+  const gap = 12; // must match the CSS gap
+  const dist = (card.offsetWidth + gap) * dir; // dir = 1 or -1
+  scroller.scrollBy({ left: dist, behavior: 'smooth' });
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => scrollByPanel(1));
+document.getElementById('prevBtn').addEventListener('click', () => scrollByPanel(-1));
+```
+
+## Next steps to get closer to the exact rauno.me feel
+
+- **Drag-to-scroll on desktop** — wrap a pointer-drag handler around `scrollLeft` so mouse users can drag like touch (not just trackpad/touch scroll).
+- **Peek effect** — leave the next card partially visible at the container edge (via padding or an extra trailing spacer) so users see there's more to scroll.
+- **Smooth easing on snap** — `scroll-behavior: smooth` for button-triggered nav; native snap handles drag-release.
+- **Tick-mark bar styling** — render individual ticks as thin divs/SVG lines spaced evenly, with the "filled" segment overlaid and animated via `transition: width 0.1s linear`.
+
+## Suggested file structure for a Next.js component
+
+```
+components/
+  Carousel/
+    Carousel.tsx
+    Carousel.module.css
+    useDragScroll.ts   // pointer-drag logic
+    useScrollProgress.ts  // scroll position -> percentage
+```
