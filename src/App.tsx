@@ -1,13 +1,27 @@
+import { Route, Routes } from 'react-router-dom'
 import { Carousel } from './components/Carousel/Carousel'
-import './App.css'
+import { ScrollRuler } from './components/ScrollRuler'
+import Resume from './pages/Resume'
+
+function Home() {
+  return (
+    <main className="flex h-screen items-center justify-center">
+      <div className="mx-auto">
+        <Carousel />
+      </div>
+    </main>
+  )
+}
 
 function App() {
   return (
-    <main style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div style={{ margin: '0 auto' }}>
-      <Carousel />
-      </div>
-    </main>
+    <>
+      <ScrollRuler />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/resume" element={<Resume />} />
+      </Routes>
+    </>
   )
 }
 
