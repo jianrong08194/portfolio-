@@ -62,11 +62,11 @@ const EXPERIENCE = [
 
 export default function Resume() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-10 text-left">
+    <div className="mx-auto max-w-4xl  py-10 text-left">
       <Link to="/" className="mb-8 inline-block text-sm text-black/50 hover:text-black">
         ‹ Back
       </Link>
-
+      <div className="px-16 py-6">
       <h1 className="text-4xl font-semibold leading-tight text-black">Tan Jian Rong</h1>
       <p className="mt-1 text-lg text-black/70">Senior Software Engineer &amp; Tech Team Lead</p>
       <p className="mt-2 text-sm text-black/50">
@@ -80,7 +80,8 @@ export default function Resume() {
           linkedin.com/in/jianrong08194
         </a>
       </p>
-
+    </div>
+    <div  className="bg-white px-16 py-6 shadow-lg">
       <section className="mt-8">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-black/50">Professional Summary</h2>
         <p className="mt-2 leading-relaxed text-black">
@@ -140,6 +141,7 @@ export default function Resume() {
         <h2 className="text-sm font-semibold uppercase tracking-wide text-black/50">Languages</h2>
         <p className="mt-2 text-black">Chinese (Native/Fluent) · English (Professional) · Bahasa Malaysia (Professional)</p>
       </section>
+    </div>
     </div>
   )
 }
