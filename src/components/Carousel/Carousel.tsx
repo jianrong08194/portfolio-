@@ -73,7 +73,7 @@ export function Carousel() {
       >
 
         {CARDS.map((card, i) => (
-          <div key={i}>
+          <div key={i} className="carousel-card-enter" style={{ animationDelay: `${i * 120}ms` }}>
             <div className={labelClassName}>
               <label>{card.label}</label>
             </div>
@@ -84,7 +84,7 @@ export function Carousel() {
         ))}
       </div>
 
-      <div className="mb-2 flex items-center justify-between gap-2">
+      <div className="carousel-card-enter mb-2 flex items-center justify-between gap-2" style={{ animationDelay: `${CARDS.length * 120 + 80}ms` }}>
         <ScrollRuler orientation="horizontal" progress={progress} />
         <div className="flex gap-2">
           <button

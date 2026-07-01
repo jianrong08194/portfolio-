@@ -58,4 +58,4 @@ jobs:
       # Step 3: Synchronize files to S3 bucket
       - name: Deploy to S3
         run: |
-          aws s3 sync ./dist s3://potfolio-s3-bucket --delete
+          aws s3 sync ./dist s3://henry.slopping.click --delete
