@@ -42,7 +42,7 @@ export function Carousel() {
       content: (
         <div className="flex h-full items-start justify-start p-8 text-start  font-semibold leading-tight text-black">
           <div className="shape-morph absolute right-[5%] top-3/5 z-0 aspect-square h-[65%] -translate-y-1/2" />
-          <span className="relative w-[80%] display-inline z-10 text-6xl">
+          <span className="relative w-[80%] z-10 text-[clamp(1.5rem,5vw,3.75rem)] leading-none">
             Tech Lead driving agile methodologies, robust code reviews, and modern development.
           </span>
         </div>
