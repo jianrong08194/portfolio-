@@ -1,39 +1,61 @@
 name: Build and Deploy Portfolio
 
-# 1. This tells GitHub to run this script every time you push to the 'main' branch
 on:
   push:
     branches:
       - main 
 
+# Required by AWS OIDC to request secure, temporary tokens
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     name: Build React App
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Grab your code from the repository
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Step 2: Install Node.js on the temporary GitHub server
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # Step 3: Install your project dependencies (like node_modules)
       - name: Install Dependencies
         run: npm ci
 
-      # Step 4: Run your Vite build script
       - name: Build Project
         run: npm run build
 
-      # Step 5: Save the 'dist' folder as a GitHub Artifact
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: portfolio-build-files
           path: ./dist
-          retention-days: 7
+          retention-days: 1
+
+  deploy:
+    name: Deploy to AWS S3
+    needs: build # Ensures deploy only runs if build succeeds!
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Download the build files saved by the build job
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: portfolio-build-files
+          path: ./dist
+
+      # Step 2: Log into AWS using OIDC (Zero long-term secrets stored)
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::093759681422:role/GitHubActionsPortfolioDeploy
+          aws-region: ap-southeast-2 
+
+      # Step 3: Synchronize files to S3 bucket
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./dist s3://potfolio-s3-bucket --delete
