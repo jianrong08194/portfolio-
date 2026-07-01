@@ -50,14 +50,14 @@ export function ScrollRuler({ orientation = 'vertical', progress: controlledProg
             style={
               isVertical
                 ? {
-                    width: isActive ? 28 : isMajor ? 18 : 10,
-                    height: isActive ? 2.5 : 1.5,
-                    background: isActive ? 'var(--color-accent, #aa3bff)' : isMajor ? '#9ca3af' : '#d1d5db',
+                    width: isActive ? 34 : isMajor ? 22 : 13,
+                    height: isActive ? 3.5 : 2,
+                    background: isActive ? '#000000' : isMajor ? '#9ca3af' : '#d1d5db',
                   }
                 : {
-                    height: isActive ? 28 : isMajor ? 18 : 10,
-                    width: isActive ? 2.5 : 1.5,
-                    background: isActive ? 'var(--color-accent, #aa3bff)' : isMajor ? '#9ca3af' : '#d1d5db',
+                    height: isActive ? 34 : isMajor ? 22 : 13,
+                    width: isActive ? 3.5 : 2,
+                    background: isActive ? '#000000' : isMajor ? '#9ca3af' : '#d1d5db',
                   }
             }
           />
