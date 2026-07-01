@@ -1,0 +1,39 @@
+name: Build and Deploy Portfolio
+
+# 1. This tells GitHub to run this script every time you push to the 'main' branch
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  build:
+    name: Build React App
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Grab your code from the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js on the temporary GitHub server
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Step 3: Install your project dependencies (like node_modules)
+      - name: Install Dependencies
+        run: npm ci
+
+      # Step 4: Run your Vite build script
+      - name: Build Project
+        run: npm run build
+
+      # Step 5: Save the 'dist' folder as a GitHub Artifact
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-build-files
+          path: ./dist
+          retention-days: 7
