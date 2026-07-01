@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { TransitionLink } from '../components/TransitionLink'
 
 const SKILLS = [
   { group: 'Frontend', items: 'React.js, Next.js, HTML, CSS, UI/UX Planning' },
@@ -63,9 +63,9 @@ const EXPERIENCE = [
 export default function Resume() {
   return (
     <div className="mx-auto max-w-4xl  py-10 text-left">
-      <Link to="/" className="mb-8 inline-block text-sm text-black/50 hover:text-black">
+      <TransitionLink to="/" className="mb-8 inline-block text-sm text-black/50 hover:text-black">
         ‹ Back
-      </Link>
+      </TransitionLink>
       <div className="px-16 py-6">
       <h1 className="text-4xl font-semibold leading-tight text-black">Tan Jian Rong</h1>
       <p className="mt-1 text-lg text-black/70">Senior Software Engineer &amp; Tech Team Lead</p>

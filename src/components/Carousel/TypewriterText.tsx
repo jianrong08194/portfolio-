@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
-const TYPE_MS = 400
-const DELETE_MS = 250
-const HOLD_FULL_MS = 1500
-const HOLD_MIN_MS = 900
+const TYPE_MS = 300
+const DELETE_MS = 200
+const HOLD_FULL_MS = 1250
+const HOLD_MIN_MS = 600
 
 export function TypewriterText({ text, className }: { text: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null)

@@ -8,7 +8,7 @@ export function useWheelScroll(ref: RefObject<HTMLElement | null>) {
 
     const onWheel = (e: WheelEvent) => {
       e.preventDefault()
-      el.scrollLeft += e.deltaY
+      el.scrollLeft += e.deltaX !== 0 ? e.deltaX : e.deltaY
     }
 
     el.addEventListener('wheel', onWheel, { passive: false })
